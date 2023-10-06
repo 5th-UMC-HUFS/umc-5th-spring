@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/user")
 @RestController
-@Getter
 @AllArgsConstructor
 public class UserController {
 
     private final UserService userservice;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody UserRequest userRequest){
+    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest){
         User user = this.userservice.createUser(userRequest);
-        String a = "create";
-        return ResponseEntity.ok().body(a);
+        return ResponseEntity.ok().body(user);
     }
 
     @GetMapping("/get/{Id}")
