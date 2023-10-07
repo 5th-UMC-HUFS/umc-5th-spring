@@ -56,17 +56,11 @@
 
 ### 도메인 모델 설계
 
-
-
-![image-20231002161156795](D:\Programming\Spring Boot\Umc\umc-5th-spring\images\README\image-20231002161156795.png)
-
-
+![1](https://github.com/5th-UMC-HUFS/umc-5th-spring/assets/132312673/93a920f4-9afe-424d-a228-7e0d00e65d01)
 
 ### 테이블 설계 
 
-![image-20231002161206747](D:\Programming\Spring Boot\Umc\umc-5th-spring\images\README\image-20231002161206747.png)
-
-
+![2](https://github.com/5th-UMC-HUFS/umc-5th-spring/assets/132312673/40f72e74-4ffa-45d7-99d9-67066cf58198)
 
  
 
