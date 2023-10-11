@@ -2,11 +2,15 @@ package com.example.umc1.domain.post.entity;
 
 import com.example.umc1.domain.member.entity.Member;
 import com.example.umc1.domain.post.dto.PostUpdateRequestDto;
+import com.example.umc1.domain.postlike.entity.PostLike;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -25,6 +29,9 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member author;
+    @Builder.Default
+    @OneToMany(mappedBy = "targetPost", cascade = CascadeType.ALL)
+    private List<PostLike> postLikes = new ArrayList<>();
 
     public void updatePost(PostUpdateRequestDto requestDto){
         if (requestDto.getTitle() != null) {
@@ -33,5 +40,15 @@ public class Post {
         if (requestDto.getContent() != null) {
             this.content = requestDto.getContent();
         }
+    }
+
+    public void addLike(PostLike postLike) {
+        this.postLikes.add(postLike);
+        postLike.setTargetPost(this);
+    }
+
+    public void removeLike(PostLike postLike){
+        this.postLikes.remove(postLike);
+        postLike.setTargetPost(null);
     }
 }
