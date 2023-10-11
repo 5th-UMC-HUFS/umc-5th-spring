@@ -30,7 +30,13 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<PostResponseDto> getPosts(Long authorId) {
+    public PostResponseDto getPost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("게시글을 불러올 수 없습니다"));
+        return PostResponseDto.of(post);
+    }
+
+    public List<PostResponseDto> getPostsByAuthor(Long authorId) {
         Member author = memberRepository.findById(authorId)
                 .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다"));
         List<Post> posts = postRepository.findByAuthor(author);
