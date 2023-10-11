@@ -1,6 +1,6 @@
-package com.example.umc.Domain.Member.Repository;
+package com.example.umc.domain.member.repository;
 
-import com.example.umc.Domain.Member.Entity.Member;
+import com.example.umc.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
