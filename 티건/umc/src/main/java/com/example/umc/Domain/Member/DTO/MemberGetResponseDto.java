@@ -1,6 +1,6 @@
-package com.example.umc.Domain.Member.DTO;
+package com.example.umc.domain.member.dto;
 
-import com.example.umc.Domain.Member.Entity.Member;
+import com.example.umc.domain.member.entity.Member;
 import lombok.*;
 
 @Getter
@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 public class MemberGetResponseDto {
 
-    public Long Id;
+    public Long id;
 
     public String name;
 
@@ -24,7 +24,7 @@ public class MemberGetResponseDto {
     // static : 메모리 공유
     public static MemberGetResponseDto of (Member member){
         return MemberGetResponseDto.builder()
-                .Id(member.getId())
+                .id(member.getId())
                 .name(member.getName())
                 .nickName(member.getNickName())
                 .phoneNumber(member.getPhoneNumber())

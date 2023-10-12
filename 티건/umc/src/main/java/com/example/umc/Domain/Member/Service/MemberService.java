@@ -1,10 +1,10 @@
-package com.example.umc.Domain.Member.Service;
+package com.example.umc.domain.member.service;
 
-import com.example.umc.Domain.Member.DTO.MemberRegisterRequestDto;
-import com.example.umc.Domain.Member.DTO.MemberGetResponseDto;
-import com.example.umc.Domain.Member.DTO.MemberUpdateRequestDto;
-import com.example.umc.Domain.Member.Entity.Member;
-import com.example.umc.Domain.Member.Repository.MemberRepository;
+import com.example.umc.domain.member.dto.MemberRegisterRequestDto;
+import com.example.umc.domain.member.dto.MemberGetResponseDto;
+import com.example.umc.domain.member.dto.MemberUpdateRequestDto;
+import com.example.umc.domain.member.entity.Member;
+import com.example.umc.domain.member.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +29,8 @@ public class MemberService {
                 .phoneNumber(memberRegisterRequestDto.getPhoneNumber())
                 .build();
 
+        log.info("회원가입");
+
         memberRepository.save(newMember);
 
     }
@@ -38,6 +40,9 @@ public class MemberService {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
 
         if (optionalMember.isPresent()) {
+
+            log.info("id:{} 회원정보", optionalMember.get().getId());
+
             return MemberGetResponseDto.of(optionalMember.get());
         } else {
             throw new RuntimeException("조회하려는 회원이 존재하지 않음");
@@ -56,6 +61,8 @@ public class MemberService {
 
         Member member = optionalMember.get();
         member.update(memberUpdateDto);
+
+        log.info("id:{} 회원정보 수정", member.getId());
     }
 
     @Transactional
@@ -67,5 +74,6 @@ public class MemberService {
 
         memberRepository.deleteById(memberId);
 
+        log.info("id:{} 회원정보 삭제", memberId);
     }
 }
