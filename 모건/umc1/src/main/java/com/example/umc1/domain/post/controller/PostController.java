@@ -36,6 +36,14 @@ public class PostController {
         return new ResponseEntity<>(postService.getPostsByAuthor(authorId), HttpStatus.OK);
     }
 
+    @GetMapping()
+    public ResponseEntity getAllPosts(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size
+    ) {
+        return new ResponseEntity<>(postService.getAllPosts(page - 1, size), HttpStatus.OK);
+    }
+
     @PutMapping("/{postId}")
     public ResponseEntity updatePost(
             @PathVariable Long postId,

@@ -3,6 +3,7 @@ package com.example.umc1.domain.post.entity;
 import com.example.umc1.domain.member.entity.Member;
 import com.example.umc1.domain.post.dto.PostUpdateRequestDto;
 import com.example.umc1.domain.postlike.entity.PostLike;
+import com.example.umc1.global.timestamp.TimeStamped;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +18,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class Post extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
