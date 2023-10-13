@@ -1,4 +1,4 @@
-package com.example.umc.entity;
+package com.example.umc.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
