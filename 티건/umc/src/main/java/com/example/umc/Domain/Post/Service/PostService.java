@@ -1,12 +1,13 @@
-package com.example.umc.Domain.Post.Service;
+package com.example.umc.domain.post.service;
 
-import com.example.umc.Domain.Member.Entity.Member;
-import com.example.umc.Domain.Member.Repository.MemberRepository;
-import com.example.umc.Domain.Post.DTO.PostGetResponseDto;
-import com.example.umc.Domain.Post.DTO.PostRegisterRequestDto;
-import com.example.umc.Domain.Post.DTO.PostUpdateRequestDto;
-import com.example.umc.Domain.Post.Entity.Post;
-import com.example.umc.Domain.Post.Repository.PostRepository;
+import com.example.umc.domain.member.entity.Member;
+import com.example.umc.domain.member.repository.MemberRepository;
+import com.example.umc.domain.post.dto.PostDeleteRequestDto;
+import com.example.umc.domain.post.dto.PostGetResponseDto;
+import com.example.umc.domain.post.dto.PostRegisterRequestDto;
+import com.example.umc.domain.post.dto.PostUpdateRequestDto;
+import com.example.umc.domain.post.entity.Post;
+import com.example.umc.domain.post.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,18 +26,21 @@ public class PostService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void registerPost(Long memberId, PostRegisterRequestDto postRegisterRequestDto) {
+    public void registerPost(PostRegisterRequestDto postRegisterRequestDto) {
 
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Optional<Member> optionalMember = memberRepository.findById(postRegisterRequestDto.getMemberId());
 
         optionalMember
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
 
         Post post = Post.builder()
                 .title(postRegisterRequestDto.getTitle())
-                .content((postRegisterRequestDto.getContent()))
-                .memberId(memberId)
+                .content(postRegisterRequestDto.getContent())
+                .member(optionalMember.get())
                 .build();
+
+        log.info("id:{} 회원 게시글 등록", optionalMember.get().getId());
+
         postRepository.save(post);
 
     }
@@ -51,6 +55,8 @@ public class PostService {
 
         Post post = optionalPost.get();
 
+        log.info("id:{} 게시글 정보", post.getId());
+
         return PostGetResponseDto.of(post);
     }
 
@@ -62,6 +68,8 @@ public class PostService {
         optionalMember
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
 
+        log.info("id:{} 회원 게시글 리스트", optionalMember.get().getId());
+
         return postRepository.findByMemberId(memberId)
                 .stream()
                 .map(PostGetResponseDto::of)
@@ -69,9 +77,9 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(Long memberId, Long postId, PostUpdateRequestDto postUpdateRequestDto) {
+    public void updatePost(Long postId, PostUpdateRequestDto postUpdateRequestDto) {
 
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Optional<Member> optionalMember = memberRepository.findById(postUpdateRequestDto.getMemberId());
         Optional<Post> optionalPost = postRepository.findById(postId);
 
         optionalMember
@@ -82,7 +90,10 @@ public class PostService {
 
         Post post = optionalPost.get();
 
-        if (post.getMemberId() == memberId) {
+        if (post.getMember() == optionalMember.get()) {
+
+            log.info("id:{} 게시글 수정", post.getId());
+
             post.update(postUpdateRequestDto);
         } else {
             throw new RuntimeException("권한 없음");
@@ -92,8 +103,8 @@ public class PostService {
     }
 
     @Transactional
-    public void deletePost(Long memberId, Long postId) {
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
+    public void deletePost(Long postId, PostDeleteRequestDto postDeleteRequestDto) {
+        Optional<Member> optionalMember = memberRepository.findById(postDeleteRequestDto.getMemberId());
         Optional<Post> optionalPost = postRepository.findById(postId);
 
         optionalMember
@@ -104,7 +115,10 @@ public class PostService {
 
         Post post = optionalPost.get();
 
-        if (post.getMemberId() == memberId) {
+        if (post.getMember() == optionalMember.get()) {
+
+            log.info("id:{} 게시글 삭제", post.getId());
+
             postRepository.deleteById(postId);
         } else {
             throw new RuntimeException("권한 없음");

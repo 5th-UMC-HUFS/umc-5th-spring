@@ -1,9 +1,9 @@
-package com.example.umc.Domain.Member.Controller;
+package com.example.umc.domain.member.controller;
 
-import com.example.umc.Domain.Member.DTO.MemberGetResponseDto;
-import com.example.umc.Domain.Member.DTO.MemberRegisterRequestDto;
-import com.example.umc.Domain.Member.DTO.MemberUpdateRequestDto;
-import com.example.umc.Domain.Member.Service.MemberService;
+import com.example.umc.domain.member.dto.MemberGetResponseDto;
+import com.example.umc.domain.member.dto.MemberRegisterRequestDto;
+import com.example.umc.domain.member.dto.MemberUpdateRequestDto;
+import com.example.umc.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

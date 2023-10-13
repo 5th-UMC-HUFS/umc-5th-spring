@@ -1,4 +1,4 @@
-package com.example.umc.Domain.Member.DTO;
+package com.example.umc.domain.member.dto;
 
 import lombok.*;
 

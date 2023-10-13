@@ -1,4 +1,4 @@
-package com.example.umc.Domain.Post.DTO;
+package com.example.umc.domain.post.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,4 +15,5 @@ public class PostRegisterRequestDto {
 
     private String content;
 
+    private Long memberId;
 }

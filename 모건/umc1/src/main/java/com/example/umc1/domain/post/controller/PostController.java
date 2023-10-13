@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/post")
 public class PostController {
-    private PostService postService;
+    private final PostService postService;
 
     @PostMapping()
     public ResponseEntity createPost(
@@ -22,11 +22,26 @@ public class PostController {
         return new ResponseEntity<>("게시글 작성 완료", HttpStatus.CREATED);
     }
 
-    @GetMapping("/{authorId}")
+    @GetMapping("/{postId}")
     public ResponseEntity getPost(
+            @PathVariable Long postId
+    ) {
+        return new ResponseEntity<>(postService.getPost(postId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{authorId}")
+    public ResponseEntity getPostByAuthor(
             @PathVariable Long authorId
     ) {
-        return new ResponseEntity<>(postService.getPosts(authorId), HttpStatus.OK);
+        return new ResponseEntity<>(postService.getPostsByAuthor(authorId), HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity getAllPosts(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size
+    ) {
+        return new ResponseEntity<>(postService.getAllPosts(page - 1, size), HttpStatus.OK);
     }
 
     @PutMapping("/{postId}")

@@ -1,9 +1,10 @@
-package com.example.umc.Domain.Post.Controller;
+package com.example.umc.domain.post.controller;
 
-import com.example.umc.Domain.Post.DTO.PostGetResponseDto;
-import com.example.umc.Domain.Post.DTO.PostRegisterRequestDto;
-import com.example.umc.Domain.Post.DTO.PostUpdateRequestDto;
-import com.example.umc.Domain.Post.Service.PostService;
+import com.example.umc.domain.post.dto.PostDeleteRequestDto;
+import com.example.umc.domain.post.dto.PostGetResponseDto;
+import com.example.umc.domain.post.dto.PostRegisterRequestDto;
+import com.example.umc.domain.post.dto.PostUpdateRequestDto;
+import com.example.umc.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,9 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/post/register/{memberId}")
-    public ResponseEntity<String> registerPost(@PathVariable Long memberId,
-                                               @RequestBody PostRegisterRequestDto postRegisterRequestDto){
-        postService.registerPost(memberId, postRegisterRequestDto);
+    @PostMapping("/post/register")
+    public ResponseEntity<String> registerPost(@RequestBody PostRegisterRequestDto postRegisterRequestDto){
+        postService.registerPost(postRegisterRequestDto);
         return ResponseEntity.ok()
                 .body("게시글 등록 성공");
     }
@@ -32,25 +32,26 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public ResponseEntity<List<PostGetResponseDto>> getPosts(@RequestParam("memberid") Long memberId){
+    public ResponseEntity<List<PostGetResponseDto>> getPosts(@RequestParam("id") Long id){
         return ResponseEntity.ok()
-                .body(postService.getPosts(memberId));
+                .body(postService.getPosts(id));
     }
 
-    @PutMapping("/post/{postId}/{memberId}")
+    @PutMapping("/post/{postId}")
     public ResponseEntity<String> updatePost(@PathVariable Long postId,
-                                             @PathVariable Long memberId,
                                              @RequestBody PostUpdateRequestDto postUpdateRequestDto){
-        postService.updatePost(memberId, postId, postUpdateRequestDto);
+        postService.updatePost(postId, postUpdateRequestDto);
         return ResponseEntity.ok()
                 .body("게시글 수정 성공");
     }
 
-    @DeleteMapping("/post/{postId}/{memberId}")
+    @DeleteMapping("/post/{postId}")
     public ResponseEntity<String> deletePost(@PathVariable Long postId,
-                                             @PathVariable Long memberId){
-        postService.deletePost(memberId, postId);
+                                             @RequestBody PostDeleteRequestDto postDeleteRequestDto){
+        postService.deletePost(postId, postDeleteRequestDto);
         return ResponseEntity.ok()
                 .body("게시글 삭제 성공");
     }
+
+
 }

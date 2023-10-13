@@ -1,6 +1,6 @@
-package com.example.umc.Domain.Post.DTO;
+package com.example.umc.domain.post.dto;
 
-import com.example.umc.Domain.Post.Entity.Post;
+import com.example.umc.domain.post.entity.Post;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,6 +24,8 @@ public class PostGetResponseDto {
 
     private Long memberId;
 
+    private String memberNickName;
+
     public static PostGetResponseDto of(Post post) {
         return PostGetResponseDto.builder()
                 .id(post.getId())
@@ -31,7 +33,8 @@ public class PostGetResponseDto {
                 .content(post.getContent())
                 .createDate(post.getCreateDate())
                 .updateDate(post.getUpdateDate())
-                .memberId(post.getMemberId())
+                .memberId(post.getMember().getId())
+                .memberNickName(post.getMember().getNickName())
                 .build();
     }
 }
