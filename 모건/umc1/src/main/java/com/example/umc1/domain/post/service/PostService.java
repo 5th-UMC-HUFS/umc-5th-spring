@@ -8,6 +8,7 @@ import com.example.umc1.domain.post.dto.PostResponseDto;
 import com.example.umc1.domain.post.dto.PostUpdateRequestDto;
 import com.example.umc1.domain.post.entity.Post;
 import com.example.umc1.domain.post.repository.PostRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional
     public void createPost(PostRequestDto requestDto) {
         Member author = memberRepository.findById(requestDto.getAuthorId())
                 .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다"));
@@ -34,13 +36,13 @@ public class PostService {
                 .build();
         postRepository.save(post);
     }
-
+    @Transactional
     public PostResponseDto getPost(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글을 불러올 수 없습니다"));
         return PostResponseDto.of(post);
     }
-
+    @Transactional
     public List<PostResponseDto> getPostsByAuthor(Long authorId) {
         Member author = memberRepository.findById(authorId)
                 .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다"));
@@ -50,7 +52,7 @@ public class PostService {
                 .collect(Collectors.toList());
         return dtos;
     }
-
+    @Transactional
     public PageDto getAllPosts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Post> postPage = postRepository.findAll(pageable);
@@ -63,13 +65,13 @@ public class PostService {
                 .hasNext(hasNext)
                 .build();
     }
-
+    @Transactional
     public void updatePost(Long postId, PostUpdateRequestDto requestDto) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글 정보를 찾을 수 없습니다."));
         post.updatePost(requestDto);
     }
-
+    @Transactional
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글 정보를 찾을 수 없습니다."));
