@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional // 간단할 떄만 클래스 레벨에 써주고 왠만하면 메서드레벨에 써주자 !
 public class MemberService {
 
     private final MemberRepository memberRepository ;

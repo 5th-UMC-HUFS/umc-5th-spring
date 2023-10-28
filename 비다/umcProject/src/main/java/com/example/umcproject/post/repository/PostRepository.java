@@ -16,4 +16,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 왜 그럼 repository 필요 ? 여기에 내가 정의하는 메서드 추가해서 사용! (엥 근데 interface인데...기능 있나...? 테스트 해봐야겠다)
 
 
+
 }

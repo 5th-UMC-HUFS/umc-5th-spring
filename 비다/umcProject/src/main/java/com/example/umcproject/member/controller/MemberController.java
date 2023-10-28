@@ -6,12 +6,16 @@ import com.example.umcproject.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.time.LocalDateTime;
+
+@Controller
+// @RestController면 페이지 포워딩 안됨 왜 ??
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {
@@ -23,15 +27,19 @@ public class MemberController {
     @GetMapping("/members/new")
     public String createForm(Model model){
 
+        MemberForm memberForm = new MemberForm() ;
+
         log.info("member controller - get form");
-        model.addAttribute("memberForm", new MemberForm());
-        return  "members/memberForm" ;
+        model.addAttribute("memberForm", memberForm);
+
+        return "members/memberForm" ;
     }
 
     @PostMapping("/members/new")
-    public String createMember(@Valid MemberForm memberForm, BindingResult result){
+    public String createMember(@Valid  MemberForm memberForm , BindingResult result){
 
         log.info("member controller - post member");
+
         if(result.hasErrors()){
             return "members/memberForm";
         }

@@ -1,10 +1,14 @@
 package com.example.umcproject.member.entity;
 
 
+import com.example.umcproject.likes.entity.Likes;
+import com.example.umcproject.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 // @Repository // @repository는 이게 repository다 라는 역할을 지정해주는 것
 // @Builder
@@ -22,15 +26,16 @@ public class Member {
 
     private String phoneNumber ;
 
+    @Column(nullable = true)
     private LocalDateTime birthDay ;
 
     private MemberStatus memberStatus ;
 
-    /*
-    @Builder.Default
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
-    */
+
+    @OneToMany(mappedBy = "liker")
+    private List<Likes> likes = new ArrayList<>();
 
 
     // 생성 메서드 //
@@ -62,4 +67,6 @@ public class Member {
         member.memberStatus = memberStatus ;
 
     }
+
+
 } //Member
