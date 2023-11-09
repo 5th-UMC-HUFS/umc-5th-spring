@@ -1,13 +1,13 @@
-package umc.study.apiPayload;
+package umc.study;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApiPayloadApplication {
+public class StudyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiPayloadApplication.class, args);
+		SpringApplication.run(StudyApplication.class, args);
 	}
 
 }

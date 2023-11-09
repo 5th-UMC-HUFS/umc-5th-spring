@@ -1,0 +1,31 @@
+package umc.study.apiPayload;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import umc.study.apiPayload.code.status.SuccessStatus;
+
+@Getter
+@AllArgsConstructor
+@JsonPropertyOrder({"isSuccess", "code", "message", "result"})
+public class ApiResponse<T> {
+
+    @JsonProperty("isSuccess")
+    private final Boolean isSuccess;
+    private final String code;
+    private final String message;
+    @JsonInclude(JsonInclude.Include.NON_NULL) // result 값은 null이 아닐 때만 응답에 포함시킨다는 뜻
+    private T result;
+
+    //성공한 경우 응답 생성
+    public static <T> ApiResponse<T> onSuccess(T result) {
+        return new ApiResponse<>(true, SuccessStatus._OK.getCode(), SuccessStatus._OK.getMessage(), result);
+    }
+
+    // 실패한 경우 응답 생성
+    public static <T> ApiResponse<T> onFailure(String code, String message, T data){
+        return new ApiResponse<>(true, code, message, data);
+    }
+}
