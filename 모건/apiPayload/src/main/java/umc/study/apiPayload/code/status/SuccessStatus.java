@@ -8,7 +8,7 @@ import umc.study.apiPayload.code.ReasonDTO;
 
 @Getter
 @AllArgsConstructor
-public enum SuccessStatus implements BaseCode {
+public enum SuccessStatus implements BaseCode { //성공 시 응답
     //일반적인 응답
     _OK(HttpStatus.OK, "COMMON200", "성공입니다.")
     ;
