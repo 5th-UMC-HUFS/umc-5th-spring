@@ -29,6 +29,7 @@ public class Member {
     private String phoneNumber;
     @Column(name = "BIRTHDAY")
     private String birthday;
+
     @Column(name = "EMAIL")
     private String email;
     @Column(name = "PASSWORD")
